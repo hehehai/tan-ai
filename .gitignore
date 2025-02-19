@@ -1,0 +1,16 @@
+node_modules
+package-lock.json
+yarn.lock
+
+.DS_Store
+.cache
+.env
+
+.data
+.vercel
+.output
+.vinxi
+.wrangler
+.netlify
+dist
+/build/
