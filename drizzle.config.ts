@@ -2,7 +2,7 @@ import type { Config } from "drizzle-kit";
 
 export default {
   out: "./.drizzle",
-  schema: "./lib/server/schema/index.ts",
+  schema: "./lib/db/schema/index.ts",
   breakpoints: true,
   dialect: "postgresql",
   dbCredentials: {
