@@ -13,7 +13,7 @@ import { user } from "./auth.schema";
 export const chat = pgTable("chat", {
 	id: uuid("id").primaryKey().notNull().defaultRandom(),
 	createdAt: timestamp("created_at").notNull(),
-	messages: json("messages").notNull().$type<Message[]>(),
+	messages: json("messages").notNull().$type<any[]>(),
 	userId: text("user_id")
 		.notNull()
 		.references(() => user.id),
@@ -24,7 +24,7 @@ export type Chat = InferSelectModel<typeof chat>;
 export const reservation = pgTable("reservation", {
 	id: uuid("id").primaryKey().notNull().defaultRandom(),
 	createdAt: timestamp("created_at").notNull(),
-	details: json("details").notNull().$type<Record<string, unknown>>(),
+	details: json("details").notNull().$type<Record<string, any>>(),
 	hasCompletedPayment: boolean("has_completed_payment")
 		.notNull()
 		.default(false),

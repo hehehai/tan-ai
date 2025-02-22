@@ -11,30 +11,21 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as DashboardRouteImport } from './routes/dashboard/route'
 import { Route as IndexImport } from './routes/index'
-import { Route as DashboardIndexImport } from './routes/dashboard/index'
 import { Route as authSignupImport } from './routes/(auth)/signup'
 import { Route as authSigninImport } from './routes/(auth)/signin'
+import { Route as wwwDashboardRouteImport } from './routes/(www)/dashboard/route'
+import { Route as wwwChatRouteImport } from './routes/(www)/chat/route'
+import { Route as wwwDashboardIndexImport } from './routes/(www)/dashboard/index'
+import { Route as wwwChatIndexImport } from './routes/(www)/chat/index'
+import { Route as wwwChatIdImport } from './routes/(www)/chat/$id'
 
 // Create/Update Routes
-
-const DashboardRouteRoute = DashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
-} as any)
-
-const DashboardIndexRoute = DashboardIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => DashboardRouteRoute,
 } as any)
 
 const authSignupRoute = authSignupImport.update({
@@ -49,6 +40,36 @@ const authSigninRoute = authSigninImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const wwwDashboardRouteRoute = wwwDashboardRouteImport.update({
+  id: '/(www)/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const wwwChatRouteRoute = wwwChatRouteImport.update({
+  id: '/(www)/chat',
+  path: '/chat',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const wwwDashboardIndexRoute = wwwDashboardIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => wwwDashboardRouteRoute,
+} as any)
+
+const wwwChatIndexRoute = wwwChatIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => wwwChatRouteRoute,
+} as any)
+
+const wwwChatIdRoute = wwwChatIdImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => wwwChatRouteRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -60,11 +81,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard': {
-      id: '/dashboard'
+    '/(www)/chat': {
+      id: '/(www)/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof wwwChatRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/(www)/dashboard': {
+      id: '/(www)/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
+      preLoaderRoute: typeof wwwDashboardRouteImport
       parentRoute: typeof rootRoute
     }
     '/(auth)/signin': {
@@ -81,79 +109,127 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authSignupImport
       parentRoute: typeof rootRoute
     }
-    '/dashboard/': {
-      id: '/dashboard/'
+    '/(www)/chat/$id': {
+      id: '/(www)/chat/$id'
+      path: '/$id'
+      fullPath: '/chat/$id'
+      preLoaderRoute: typeof wwwChatIdImport
+      parentRoute: typeof wwwChatRouteImport
+    }
+    '/(www)/chat/': {
+      id: '/(www)/chat/'
+      path: '/'
+      fullPath: '/chat/'
+      preLoaderRoute: typeof wwwChatIndexImport
+      parentRoute: typeof wwwChatRouteImport
+    }
+    '/(www)/dashboard/': {
+      id: '/(www)/dashboard/'
       path: '/'
       fullPath: '/dashboard/'
-      preLoaderRoute: typeof DashboardIndexImport
-      parentRoute: typeof DashboardRouteImport
+      preLoaderRoute: typeof wwwDashboardIndexImport
+      parentRoute: typeof wwwDashboardRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface DashboardRouteRouteChildren {
-  DashboardIndexRoute: typeof DashboardIndexRoute
+interface wwwChatRouteRouteChildren {
+  wwwChatIdRoute: typeof wwwChatIdRoute
+  wwwChatIndexRoute: typeof wwwChatIndexRoute
 }
 
-const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
-  DashboardIndexRoute: DashboardIndexRoute,
+const wwwChatRouteRouteChildren: wwwChatRouteRouteChildren = {
+  wwwChatIdRoute: wwwChatIdRoute,
+  wwwChatIndexRoute: wwwChatIndexRoute,
 }
 
-const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
-  DashboardRouteRouteChildren,
+const wwwChatRouteRouteWithChildren = wwwChatRouteRoute._addFileChildren(
+  wwwChatRouteRouteChildren,
 )
+
+interface wwwDashboardRouteRouteChildren {
+  wwwDashboardIndexRoute: typeof wwwDashboardIndexRoute
+}
+
+const wwwDashboardRouteRouteChildren: wwwDashboardRouteRouteChildren = {
+  wwwDashboardIndexRoute: wwwDashboardIndexRoute,
+}
+
+const wwwDashboardRouteRouteWithChildren =
+  wwwDashboardRouteRoute._addFileChildren(wwwDashboardRouteRouteChildren)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/chat': typeof wwwChatRouteRouteWithChildren
+  '/dashboard': typeof wwwDashboardRouteRouteWithChildren
   '/signin': typeof authSigninRoute
   '/signup': typeof authSignupRoute
-  '/dashboard/': typeof DashboardIndexRoute
+  '/chat/$id': typeof wwwChatIdRoute
+  '/chat/': typeof wwwChatIndexRoute
+  '/dashboard/': typeof wwwDashboardIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/signin': typeof authSigninRoute
   '/signup': typeof authSignupRoute
-  '/dashboard': typeof DashboardIndexRoute
+  '/chat/$id': typeof wwwChatIdRoute
+  '/chat': typeof wwwChatIndexRoute
+  '/dashboard': typeof wwwDashboardIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/(www)/chat': typeof wwwChatRouteRouteWithChildren
+  '/(www)/dashboard': typeof wwwDashboardRouteRouteWithChildren
   '/(auth)/signin': typeof authSigninRoute
   '/(auth)/signup': typeof authSignupRoute
-  '/dashboard/': typeof DashboardIndexRoute
+  '/(www)/chat/$id': typeof wwwChatIdRoute
+  '/(www)/chat/': typeof wwwChatIndexRoute
+  '/(www)/dashboard/': typeof wwwDashboardIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/signin' | '/signup' | '/dashboard/'
+  fullPaths:
+    | '/'
+    | '/chat'
+    | '/dashboard'
+    | '/signin'
+    | '/signup'
+    | '/chat/$id'
+    | '/chat/'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/signin' | '/signup' | '/dashboard'
+  to: '/' | '/signin' | '/signup' | '/chat/$id' | '/chat' | '/dashboard'
   id:
     | '__root__'
     | '/'
-    | '/dashboard'
+    | '/(www)/chat'
+    | '/(www)/dashboard'
     | '/(auth)/signin'
     | '/(auth)/signup'
-    | '/dashboard/'
+    | '/(www)/chat/$id'
+    | '/(www)/chat/'
+    | '/(www)/dashboard/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
+  wwwChatRouteRoute: typeof wwwChatRouteRouteWithChildren
+  wwwDashboardRouteRoute: typeof wwwDashboardRouteRouteWithChildren
   authSigninRoute: typeof authSigninRoute
   authSignupRoute: typeof authSignupRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DashboardRouteRoute: DashboardRouteRouteWithChildren,
+  wwwChatRouteRoute: wwwChatRouteRouteWithChildren,
+  wwwDashboardRouteRoute: wwwDashboardRouteRouteWithChildren,
   authSigninRoute: authSigninRoute,
   authSignupRoute: authSignupRoute,
 }
@@ -169,7 +245,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/dashboard",
+        "/(www)/chat",
+        "/(www)/dashboard",
         "/(auth)/signin",
         "/(auth)/signup"
       ]
@@ -177,10 +254,17 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
-    "/dashboard": {
-      "filePath": "dashboard/route.tsx",
+    "/(www)/chat": {
+      "filePath": "(www)/chat/route.tsx",
       "children": [
-        "/dashboard/"
+        "/(www)/chat/$id",
+        "/(www)/chat/"
+      ]
+    },
+    "/(www)/dashboard": {
+      "filePath": "(www)/dashboard/route.tsx",
+      "children": [
+        "/(www)/dashboard/"
       ]
     },
     "/(auth)/signin": {
@@ -189,9 +273,17 @@ export const routeTree = rootRoute
     "/(auth)/signup": {
       "filePath": "(auth)/signup.tsx"
     },
-    "/dashboard/": {
-      "filePath": "dashboard/index.tsx",
-      "parent": "/dashboard"
+    "/(www)/chat/$id": {
+      "filePath": "(www)/chat/$id.tsx",
+      "parent": "/(www)/chat"
+    },
+    "/(www)/chat/": {
+      "filePath": "(www)/chat/index.tsx",
+      "parent": "/(www)/chat"
+    },
+    "/(www)/dashboard/": {
+      "filePath": "(www)/dashboard/index.tsx",
+      "parent": "/(www)/dashboard"
     }
   }
 }
