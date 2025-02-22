@@ -1,4 +1,3 @@
-import type { Message } from "ai";
 import type { InferSelectModel } from "drizzle-orm";
 import {
 	boolean,
