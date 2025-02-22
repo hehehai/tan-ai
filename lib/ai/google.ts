@@ -3,7 +3,9 @@ import { wrapLanguageModel } from "ai";
 import { ProxyAgent, setGlobalDispatcher } from "undici";
 import { env } from "../utils/env";
 
-setGlobalDispatcher(new ProxyAgent("http://127.0.0.1:15732"));
+if (env.LOCAL_PROXY) {
+	setGlobalDispatcher(new ProxyAgent(env.LOCAL_PROXY));
+}
 
 export const google = createGoogleGenerativeAI({
 	apiKey: env.GOOGLE_GENERATIVE_AI_API_KEY ?? "",

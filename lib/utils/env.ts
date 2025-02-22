@@ -3,6 +3,7 @@ import { z } from "zod";
 
 export const env = createEnv({
 	server: {
+		LOCAL_PROXY: z.string().url().optional(),
 		DATABASE_URL: z.string().url(),
 		BETTER_AUTH_SECRET: z.string().min(1),
 		GOOGLE_GENERATIVE_AI_API_KEY: z.string().min(1),
