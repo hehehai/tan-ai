@@ -1,5 +1,5 @@
 <a href="https://tan-ai.actnow.dev/">
-  <img alt="Tanstack Start and App Router-ready AI chatbot." src="app/(chat)/opengraph-image.png">
+  <img alt="Tanstack Start and App Router-ready AI chatbot." src="https://github.com/user-attachments/assets/2e6f3c70-8684-4864-a6f2-58ab013a535d">
   <h1 align="center">Tanstack Start Gemini Chatbot</h1>
 </a>
 
