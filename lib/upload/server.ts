@@ -37,6 +37,7 @@ export async function uploadFileToR2(
 ): Promise<{
 	safeFilename: string;
 	fileUrl: string;
+	contentType: string;
 }> {
 	try {
 		console.log("[R2] 直接上传文件");
@@ -58,6 +59,7 @@ export async function uploadFileToR2(
 		return {
 			safeFilename,
 			fileUrl,
+			contentType,
 		};
 	} catch (err) {
 		console.error("[R2] 直接上传文件失败", err);

@@ -25,6 +25,7 @@ import {
 	StopIcon,
 } from "~/components/shared/icons";
 import useWindowSize from "~/hooks/use-window-size";
+import { actionUploadFile } from "~/server/actions/common";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 import { PreviewAttachment } from "./preview-attachment";
@@ -107,33 +108,17 @@ export function MultimodalInput({
 		}
 	}, [attachments, handleSubmit, setAttachments, width]);
 
-	const uploadFile = async (file: File) => {
+	const uploadFile = useCallback(async (file: File) => {
 		const formData = new FormData();
 		formData.append("file", file);
 
 		try {
-			const response = await fetch("/api/files/upload", {
-				method: "POST",
-				body: formData,
-			});
-
-			if (response.ok) {
-				const data = await response.json();
-				const { url, pathname, contentType } = data;
-
-				return {
-					url,
-					name: pathname,
-					contentType: contentType,
-				};
-			}
-			const { error } = await response.json();
-			toast.error(error);
+			return actionUploadFile({ data: formData });
 		} catch (error) {
 			console.error("Error uploading files!", error);
 			toast.error("Failed to upload file, please try again!");
 		}
-	};
+	}, []);
 
 	const handleFileChange = useCallback(
 		async (event: ChangeEvent<HTMLInputElement>) => {
@@ -158,7 +143,7 @@ export function MultimodalInput({
 				setUploadQueue([]);
 			}
 		},
-		[setAttachments],
+		[setAttachments, uploadFile],
 	);
 
 	return (
