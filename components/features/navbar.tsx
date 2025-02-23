@@ -1,11 +1,9 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import type { User } from "better-auth";
 import { authClient } from "~/lib/auth/auth.client";
-import {
-	HugeiconsGithub,
-	HugeiconsNewTwitter,
-	SlashIcon,
-} from "../shared/icons";
+import { cn } from "~/lib/utils";
+import { SlashIcon } from "../shared/icons";
+import { SocialLinks } from "../shared/social-links";
 import ThemeToggle from "../shared/theme-toggle";
 import { Button } from "../ui/button";
 import {
@@ -30,36 +28,22 @@ export const Navbar = ({ user }: { user: User | null }) => {
 							alt="gemini logo"
 							className="size-5"
 						/>
-						<div className="text-zinc-500">
+						<div className="text-zinc-500 hidden md:block">
 							<SlashIcon />
 						</div>
-						<div className="text-sm dark:text-zinc-300 truncate w-28 md:w-fit">
-							Next.js Gemini Chatbot
+						<div
+							className={cn(
+								"text-sm dark:text-zinc-300 truncate w-28 md:block md:w-fit",
+								!user ? "block" : "hidden",
+							)}
+						>
+							Tanstack Start Gemini Chatbot
 						</div>
 					</div>
 				</div>
 
 				<div className="flex flex-row gap-2 items-center">
-					<div className="flex flex-row gap-2 items-center">
-						<Button variant="secondary" size="icon" asChild>
-							<a
-								href="https://x.com/riverhohai"
-								target="_blank"
-								rel="noreferrer"
-							>
-								<HugeiconsNewTwitter />
-							</a>
-						</Button>
-						<Button variant="secondary" size="icon" asChild>
-							<a
-								href="https://github.com/hehehai/tan-ai"
-								target="_blank"
-								rel="noreferrer"
-							>
-								<HugeiconsGithub />
-							</a>
-						</Button>
-					</div>
+					<SocialLinks className="hidden md:flex" />
 					{user ? (
 						<DropdownMenu>
 							<DropdownMenuTrigger asChild>

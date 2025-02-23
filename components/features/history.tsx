@@ -39,6 +39,7 @@ import {
 import type { Chat } from "~/lib/db/schema";
 import { cn, getTitleFromChat } from "~/lib/utils";
 import { actionGetUserChats } from "~/server/actions/chat";
+import { SocialLinks } from "../shared/social-links";
 
 export const History = ({ user }: { user: User | null }) => {
 	const { id } = useParams({ from: "/(www)/chat/$id" });
@@ -120,7 +121,7 @@ export const History = ({ user }: { user: User | null }) => {
 							</Button>
 						)}
 
-						<div className="flex flex-col gap-2 overflow-y-scroll py-2 h-[calc(100dvh-164px)]">
+						<div className="flex flex-col gap-2 overflow-y-scroll py-2 h-[calc(100dvh-184px)]">
 							{!user ? (
 								<div className="text-zinc-500 h-dvh w-full flex flex-row justify-center items-center text-sm gap-2">
 									<InfoIcon />
@@ -203,6 +204,7 @@ export const History = ({ user }: { user: User | null }) => {
 								))}
 						</div>
 					</div>
+					<SocialLinks className="md:hidden" />
 				</SheetContent>
 			</Sheet>
 

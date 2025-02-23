@@ -35,10 +35,10 @@ export const Overview = () => {
 					</code>{" "}
 					hook on the client to create a seamless chat experience.
 				</p>
-				<p className="flex flex-row gap-1 items-center">
+				<p className="break-all">
 					<span>You can learn more</span>
 					<a
-						className="text-blue-500 dark:text-blue-400"
+						className="text-blue-500 dark:text-blue-400 ms-1 me-1"
 						href="https://sdk.vercel.ai/docs"
 						target="_blank"
 						rel="noreferrer"
@@ -47,8 +47,8 @@ export const Overview = () => {
 					</a>
 					<span>and</span>
 					<a
-						className="text-blue-500 dark:text-blue-400"
-						href="https://tanstack.com/start/latest/docs/framework/react/overview"
+						className="text-blue-500 dark:text-blue-400 ms-1 me-1"
+						href="https://tanstack.com/start/latest"
 						target="_blank"
 						rel="noreferrer"
 					>
