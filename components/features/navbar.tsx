@@ -1,7 +1,11 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import type { User } from "better-auth";
 import { authClient } from "~/lib/auth/auth.client";
-import { SlashIcon } from "../shared/icons";
+import {
+	HugeiconsGithub,
+	HugeiconsNewTwitter,
+	SlashIcon,
+} from "../shared/icons";
 import ThemeToggle from "../shared/theme-toggle";
 import { Button } from "../ui/button";
 import {
@@ -35,47 +39,66 @@ export const Navbar = ({ user }: { user: User | null }) => {
 					</div>
 				</div>
 
-				{user ? (
-					<DropdownMenu>
-						<DropdownMenuTrigger asChild>
-							<Button
-								className="py-1.5 px-2 h-fit font-normal"
-								variant="secondary"
+				<div className="flex flex-row gap-2 items-center">
+					<div className="flex flex-row gap-2 items-center">
+						<Button variant="secondary" size="icon" asChild>
+							<a
+								href="https://x.com/riverhohai"
+								target="_blank"
+								rel="noreferrer"
 							>
-								{user?.email}
-							</Button>
-						</DropdownMenuTrigger>
-						<DropdownMenuContent align="end">
-							<DropdownMenuItem>
-								<ThemeToggle />
-							</DropdownMenuItem>
-							<DropdownMenuItem className="p-1 z-50">
-								<form
-									className="w-full"
-									onSubmit={async (e) => {
-										e.preventDefault();
-										const result = await authClient.signOut();
-										if (result.error) {
-											throw new Error(result.error.message);
-										}
-										navigate({ to: "/" });
-									}}
-								>
-									<button
-										type="submit"
-										className="w-full text-left px-1 py-0.5 text-red-500"
+								<HugeiconsNewTwitter />
+							</a>
+						</Button>
+						<Button variant="secondary" size="icon" asChild>
+							<a
+								href="https://github.com/hehehai/tan-ai"
+								target="_blank"
+								rel="noreferrer"
+							>
+								<HugeiconsGithub />
+							</a>
+						</Button>
+					</div>
+					{user ? (
+						<DropdownMenu>
+							<DropdownMenuTrigger asChild>
+								<Button className="h-fit font-normal" variant="secondary">
+									{user?.email}
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent align="end">
+								<DropdownMenuItem>
+									<ThemeToggle />
+								</DropdownMenuItem>
+								<DropdownMenuItem className="p-1 z-50">
+									<form
+										className="w-full"
+										onSubmit={async (e) => {
+											e.preventDefault();
+											const result = await authClient.signOut();
+											if (result.error) {
+												throw new Error(result.error.message);
+											}
+											navigate({ to: "/" });
+										}}
 									>
-										Sign out
-									</button>
-								</form>
-							</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
-				) : (
-					<Button className="py-1.5 px-2 h-fit font-normal text-white" asChild>
-						<Link to="/signin">Login</Link>
-					</Button>
-				)}
+										<button
+											type="submit"
+											className="w-full text-left px-1 py-0.5 text-red-500"
+										>
+											Sign out
+										</button>
+									</form>
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
+					) : (
+						<Button className="h-fit font-normal text-white" asChild>
+							<Link to="/signin">Login</Link>
+						</Button>
+					)}
+				</div>
 			</div>
 		</>
 	);

@@ -78,7 +78,7 @@ export const History = ({ user }: { user: User | null }) => {
 		<>
 			<Button
 				variant="outline"
-				className="p-1.5 h-fit"
+				className="h-fit"
 				onClick={() => {
 					setIsHistoryVisible(true);
 				}}

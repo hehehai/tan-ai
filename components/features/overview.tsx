@@ -13,6 +13,11 @@ export const Overview = () => {
 			transition={{ delay: 0.5 }}
 		>
 			<div className="border-none bg-muted/50 rounded-2xl p-6 flex flex-col gap-4 text-zinc-500 text-sm dark:text-zinc-400 dark:border-zinc-700">
+				<img
+					src="https://tanstack.com/blog-assets/why-tanstack-start-and-router/tanstack-start-blog-header.jpg"
+					alt="tanstack start cover"
+					className="rounded-xl"
+				/>
 				<p className="flex flex-row justify-center gap-4 items-center text-zinc-900 dark:text-zinc-50">
 					<VercelIcon />
 					<span>+</span>
@@ -30,18 +35,26 @@ export const Overview = () => {
 					</code>{" "}
 					hook on the client to create a seamless chat experience.
 				</p>
-				<p>
-					{" "}
-					You can learn more about the AI SDK by visiting the{" "}
+				<p className="flex flex-row gap-1 items-center">
+					<span>You can learn more</span>
 					<a
 						className="text-blue-500 dark:text-blue-400"
 						href="https://sdk.vercel.ai/docs"
 						target="_blank"
 						rel="noreferrer"
 					>
-						Docs
+						AI SDK Docs
 					</a>
-					.
+					<span>and</span>
+					<a
+						className="text-blue-500 dark:text-blue-400"
+						href="https://tanstack.com/start/latest/docs/framework/react/overview"
+						target="_blank"
+						rel="noreferrer"
+					>
+						Tanstack Start Docs
+					</a>
+					<span>.</span>
 				</p>
 			</div>
 		</motion.div>
