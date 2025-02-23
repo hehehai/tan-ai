@@ -1,5 +1,3 @@
-"use client";
-
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { differenceInMinutes } from "date-fns";
 import { useState } from "react";

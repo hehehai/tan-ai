@@ -1,5 +1,3 @@
-"use client";
-
 import type { Attachment, ToolInvocation } from "ai";
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
