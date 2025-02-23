@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Message as PreviewMessage } from "~/components/features/message";
 import { useScrollToBottom } from "~/hooks/use-scroll-to-bottom";
 
+import { toast } from "sonner";
 import { MultimodalInput } from "~/components/features/multimodal-input";
 import { Overview } from "~/components/features/overview";
 
@@ -15,14 +16,16 @@ export function Chat({
 	id: string;
 	initialMessages: Array<Message>;
 }) {
-	const { messages, handleSubmit, input, setInput, append, isLoading, stop } =
+	const { messages, handleSubmit, input, setInput, append, status, stop } =
 		useChat({
 			id,
 			body: { id },
 			initialMessages,
 			maxSteps: 10,
-			onFinish: () => {
-				window.history.replaceState({}, "", `/chat/${id}`);
+			onError(error) {
+				toast.error("Failed to generate response", {
+					description: error.message,
+				});
 			},
 		});
 
@@ -40,9 +43,9 @@ export function Chat({
 				>
 					{messages.length === 0 && <Overview />}
 
-					{messages.map((message) => (
+					{messages.map((message, idx) => (
 						<PreviewMessage
-							key={message.id}
+							key={message.id ?? idx}
 							chatId={id}
 							role={message.role}
 							content={message.content}
@@ -62,7 +65,7 @@ export function Chat({
 						input={input}
 						setInput={setInput}
 						handleSubmit={handleSubmit}
-						isLoading={isLoading}
+						isLoading={["submitted", "streaming"].includes(status)}
 						stop={stop}
 						attachments={attachments}
 						setAttachments={setAttachments}

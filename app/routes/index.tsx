@@ -1,10 +1,18 @@
-import { Link, createFileRoute, useRouter } from "@tanstack/react-router";
+import {
+	Link,
+	createFileRoute,
+	redirect,
+	useRouter,
+} from "@tanstack/react-router";
 import ThemeToggle from "~/components/shared/theme-toggle";
 import { Button } from "~/components/ui/button";
 import { authClient } from "~/lib/auth/auth.client";
 
 export const Route = createFileRoute("/")({
 	component: Home,
+	beforeLoad: () => {
+		throw redirect({ to: "/chat" });
+	},
 	loader: ({ context }) => {
 		return { user: context.user };
 	},

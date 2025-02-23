@@ -1,6 +1,6 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import type { User } from "better-auth";
-import { actionSignOut } from "~/server/actions/user";
+import { authClient } from "~/lib/auth/auth.client";
 import { SlashIcon } from "../shared/icons";
 import ThemeToggle from "../shared/theme-toggle";
 import { Button } from "../ui/button";
@@ -10,13 +10,16 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { History } from "./history";
 
 export const Navbar = ({ user }: { user: User | null }) => {
+	const navigate = useNavigate();
+
 	return (
 		<>
 			<div className="bg-background absolute top-0 left-0 w-dvw py-2 px-3 justify-between flex flex-row items-center z-30">
 				<div className="flex flex-row gap-3 items-center">
-					<div>history</div>
+					<History user={user} />
 					<div className="flex flex-row gap-2 items-center">
 						<img
 							src="/images/gemini-logo.png"
@@ -47,7 +50,17 @@ export const Navbar = ({ user }: { user: User | null }) => {
 								<ThemeToggle />
 							</DropdownMenuItem>
 							<DropdownMenuItem className="p-1 z-50">
-								<form className="w-full" action={actionSignOut.url}>
+								<form
+									className="w-full"
+									onSubmit={async (e) => {
+										e.preventDefault();
+										const result = await authClient.signOut();
+										if (result.error) {
+											throw new Error(result.error.message);
+										}
+										navigate({ to: "/" });
+									}}
+								>
 									<button
 										type="submit"
 										className="w-full text-left px-1 py-0.5 text-red-500"

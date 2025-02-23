@@ -16,5 +16,5 @@ export const Route = createFileRoute("/(www)/chat/$id")({
 function RouteComponent() {
 	const { id, chat } = Route.useLoaderData();
 
-	return <Chat id={id} initialMessages={chat?.messages ?? []} />;
+	return <Chat key={id} id={id} initialMessages={chat?.messages ?? []} />;
 }

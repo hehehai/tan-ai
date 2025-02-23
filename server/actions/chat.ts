@@ -5,6 +5,7 @@ import type { Chat } from "~/lib/db/schema";
 import { authMiddleware } from "~/lib/middleware/auth-guard";
 import {
 	getChatById,
+	getChatsByUserId,
 	getReservationById,
 	updateReservation,
 } from "../function/chat";
@@ -55,4 +56,10 @@ export const actionUpdateReservation = createServerFn({ method: "POST" })
 		});
 
 		return null;
+	});
+
+export const actionGetUserChats = createServerFn({ method: "GET" })
+	.middleware([authMiddleware])
+	.handler(async ({ context }) => {
+		return getChatsByUserId({ id: context.user.id });
 	});
