@@ -228,40 +228,39 @@ export function MultimodalInput({
 				}}
 			/>
 
-			{isLoading ? (
+			<div className="absolute bottom-2 right-2 flex gap-2">
 				<Button
-					className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5 text-white"
+					className="rounded-full p-1.5 dark:border-zinc-700 h-8"
 					onClick={(event) => {
 						event.preventDefault();
-						stop();
+						fileInputRef.current?.click();
 					}}
+					variant="outline"
+					disabled={isLoading}
 				>
-					<StopIcon className="text-sm" />
+					<PaperclipIcon className="text-sm" />
 				</Button>
-			) : (
+
 				<Button
-					className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5 text-white"
+					className="rounded-full p-1.5 h-8"
 					onClick={(event) => {
 						event.preventDefault();
-						submitForm();
+
+						if (isLoading) {
+							stop();
+						} else {
+							submitForm();
+						}
 					}}
 					disabled={input.length === 0 || uploadQueue.length > 0}
 				>
-					<ArrowUpIcon className="text-sm" />
+					{isLoading ? (
+						<StopIcon className="text-sm" />
+					) : (
+						<ArrowUpIcon className="text-sm" />
+					)}
 				</Button>
-			)}
-
-			<Button
-				className="rounded-full p-1.5 h-fit absolute bottom-2 right-14 m-0.5 dark:border-zinc-700"
-				onClick={(event) => {
-					event.preventDefault();
-					fileInputRef.current?.click();
-				}}
-				variant="outline"
-				disabled={isLoading}
-			>
-				<PaperclipIcon className="text-sm" />
-			</Button>
+			</div>
 		</div>
 	);
 }
