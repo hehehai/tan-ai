@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 import { GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
 import { format } from "date-fns";
-import { env } from "../utils/env";
+import { env } from "../utils/env.server";
 import { uploadClient } from "./s3";
 
 export const getSafeFilename = (name: string) => {

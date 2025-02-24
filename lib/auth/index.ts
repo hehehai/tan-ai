@@ -1,8 +1,9 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { oneTap } from "better-auth/plugins";
 
 import { db } from "../db";
-import { env } from "../utils/env";
+import { env } from "../utils/env.server";
 
 export const auth = betterAuth({
 	baseURL: env.VITE_BASE_URL,
@@ -30,8 +31,10 @@ export const auth = betterAuth({
 			clientSecret: env.BETTER_AUTH_GITHUB_CLIENT_SECRET,
 		},
 		google: {
-			clientId: env.BETTER_AUTH_GOOGLE_CLIENT_ID,
+			clientId: env.VITE_BETTER_AUTH_GOOGLE_CLIENT_ID,
 			clientSecret: env.BETTER_AUTH_GOOGLE_CLIENT_SECRET,
 		},
 	},
+
+	plugins: [oneTap()],
 });

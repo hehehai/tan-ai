@@ -10,6 +10,7 @@ import {
 import { createServerFn } from "@tanstack/start";
 import { getWebRequest } from "@tanstack/start/server";
 import { Suspense, lazy } from "react";
+import { AuthOneTap } from "~/components/features/auth-one-tap";
 import { Toaster } from "~/components/ui/sonner";
 
 import { auth } from "~/lib/auth";
@@ -53,8 +54,23 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 				{
 					title: "TanAI",
 				},
+				{
+					name: "description",
+					content: "TanAI is a platform for AI development",
+				},
+				{
+					name: "author",
+					content: "TanAI",
+				},
+				{
+					name: "keywords",
+					content: "TanAI, AI, development",
+				},
 			],
-			links: [{ rel: "stylesheet", href: appCss }],
+			links: [
+				{ rel: "stylesheet", href: appCss },
+				{ rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+			],
 		}),
 		component: RootComponent,
 	},
@@ -90,6 +106,7 @@ function RootDocument({ children }: { readonly children: React.ReactNode }) {
 				<Suspense>
 					<TanStackRouterDevtools position="bottom-right" />
 				</Suspense>
+				<AuthOneTap />
 
 				<Scripts />
 			</body>

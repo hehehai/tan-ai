@@ -42,7 +42,7 @@
 		"@tanstack/zod-adapter": "^1.105.0",
 		"@vitejs/plugin-react": "^4.3.4",
 		"ai": "^4.1.41",
-		"better-auth": "^1.1.18",
+		"better-auth": "^1.1.19",
 		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.1",
 		"date-fns": "^4.1.0",

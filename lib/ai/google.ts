@@ -1,7 +1,7 @@
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { wrapLanguageModel } from "ai";
 import { ProxyAgent, setGlobalDispatcher } from "undici";
-import { env } from "../utils/env";
+import { env } from "../utils/env.server";
 
 if (env.LOCAL_PROXY) {
 	setGlobalDispatcher(new ProxyAgent(env.LOCAL_PROXY));
