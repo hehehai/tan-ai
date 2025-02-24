@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-router";
 import { toast } from "sonner";
 import { AuthForm } from "~/components/features/auth-form";
+import { ThirdAuthSignInButtons } from "~/components/features/third-auth-buttons";
 import { Button } from "~/components/ui/button";
 import { authClient } from "~/lib/auth/auth.client";
 import { DASHBOARD_URL } from "~/lib/const/common";
@@ -62,6 +63,9 @@ function AuthPage() {
 						{" for free."}
 					</p>
 				</AuthForm>
+				<div className="px-4 text-center sm:px-16">
+					<ThirdAuthSignInButtons />
+				</div>
 			</div>
 		</div>
 	);

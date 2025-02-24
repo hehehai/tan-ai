@@ -11,6 +11,10 @@ export const env = createEnv({
 		CLOUD_FLARE_S3_UPLOAD_ID: z.string().min(1),
 		CLOUD_FLARE_S3_UPLOAD_SECRET: z.string().min(1),
 		CLOUD_FLARE_S3_UPLOAD_BUCKET: z.string().min(1),
+		BETTER_AUTH_GITHUB_CLIENT_ID: z.string().min(1),
+		BETTER_AUTH_GITHUB_CLIENT_SECRET: z.string().min(1),
+		BETTER_AUTH_GOOGLE_CLIENT_ID: z.string().min(1),
+		BETTER_AUTH_GOOGLE_CLIENT_SECRET: z.string().min(1),
 	},
 
 	/**
