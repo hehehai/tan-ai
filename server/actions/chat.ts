@@ -1,65 +1,64 @@
-import { createServerFn } from "@tanstack/start";
-import { setResponseStatus } from "@tanstack/start/server";
+import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import type { Chat } from "~/lib/db/schema";
 import { authMiddleware } from "~/lib/middleware/auth-guard";
 import {
-	getChatById,
-	getChatsByUserId,
-	getReservationById,
-	updateReservation,
+  createChat,
+  getChatById,
+  getChatsByUserId,
+  getMessagesByChatId,
 } from "../function/chat";
 
-// 查询聊天信息
+// 查询聊天
 export const queryGetChatById = createServerFn({ method: "GET" })
-	.validator(z.object({ id: z.string() }))
-	.handler(async ({ data }) => {
-		let res: Chat | null = null;
-		try {
-			res = await getChatById({ id: data.id });
-		} catch {
-			res = null;
-		}
-		return {
-			id: data.id,
-			chat: res,
-		};
-	});
+  .middleware([authMiddleware])
+  .validator(z.object({ id: z.string() }))
+  .handler(async ({ data }) => {
+    let res: Chat | null = null;
+    try {
+      res = await getChatById({ id: data.id });
+    } catch {
+      res = null;
+    }
+    return res;
+  });
 
-// 查询预定信息
-export const queryGetReservationById = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
-	.validator(z.object({ id: z.string() }))
-	.handler(async ({ data }) => {
-		return getReservationById({ id: data.id });
-	});
+// 创建聊天
+export const actionCreateChat = createServerFn({ method: "POST" })
+  .middleware([authMiddleware])
+  .validator(z.object({ title: z.string(), id: z.string() }))
+  .handler(async ({ data, context }) => {
+    return await createChat({
+      id: data.id,
+      userId: context.user.id,
+      title: data.title,
+    });
+  });
 
-// 更新预定信息
-export const actionUpdateReservation = createServerFn({ method: "POST" })
-	.middleware([authMiddleware])
-	.validator(z.object({ id: z.string(), magicWord: z.string() }))
-	.handler(async ({ data, context }) => {
-		const reservation = await getReservationById({ id: data.id });
-		if (!reservation) {
-			setResponseStatus(404);
-			throw new Error("Reservation not found");
-		}
-
-		if (reservation.userId !== context.user.id) {
-			setResponseStatus(403);
-			throw new Error("Unauthorized");
-		}
-
-		await updateReservation({
-			id: data.id,
-			hasCompletedPayment: data.magicWord === "magic",
-		});
-
-		return null;
-	});
+// 查询聊天消息
+export const queryGetChatMessagesById = createServerFn({ method: "GET" })
+  .middleware([authMiddleware])
+  .validator(z.object({ id: z.string() }))
+  .handler(async ({ data }) => {
+    try {
+      const messages = await getMessagesByChatId({ id: data.id });
+      return messages.map((msg) => ({
+        ...msg,
+        content: msg.content || "",
+      }));
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  });
 
 export const actionGetUserChats = createServerFn({ method: "GET" })
-	.middleware([authMiddleware])
-	.handler(async ({ context }) => {
-		return getChatsByUserId({ id: context.user.id });
-	});
+  .middleware([authMiddleware])
+  .handler(async ({ context }) => {
+    try {
+      return getChatsByUserId({ id: context.user.id });
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  });

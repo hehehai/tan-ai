@@ -1,20 +1,39 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Chat } from "~/components/features/chat";
-import { queryGetChatById } from "~/server/actions/chat";
+import { convertToUIMessages } from "~/lib/utils";
+import { queryGetChatMessagesById } from "~/server/actions/chat";
 
 export const Route = createFileRoute("/(www)/chat/$id")({
-	loader: async ({ params }) => {
-		return queryGetChatById({
-			data: {
-				id: params.id,
-			},
-		});
-	},
-	component: RouteComponent,
+  loader: async ({ params, context }) => {
+    if (!context.user) {
+      return {
+        id: params.id,
+        messages: [],
+      };
+    }
+
+    const messages = await queryGetChatMessagesById({
+      data: {
+        id: params.id,
+      },
+    });
+
+    return {
+      id: params.id,
+      messages,
+    };
+  },
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	const { id, chat } = Route.useLoaderData();
+  const { id, messages } = Route.useLoaderData();
 
-	return <Chat key={id} id={id} initialMessages={chat?.messages ?? []} />;
+  return (
+    <Chat
+      key={id}
+      id={id}
+      initialMessages={messages?.length ? convertToUIMessages(messages) : []}
+    />
+  );
 }

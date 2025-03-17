@@ -5,6 +5,7 @@
 @source "../app";
 
 @plugin "tailwindcss-animate";
+@plugin '@egoist/tailwindcss-icons';
 
 @custom-variant dark (&:is(.dark *));
 

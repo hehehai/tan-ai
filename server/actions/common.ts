@@ -1,4 +1,4 @@
-import { createServerFn } from "@tanstack/start";
+import { createServerFn } from "@tanstack/react-start";
 import { authMiddleware } from "~/lib/middleware/auth-guard";
 import { uploadFileToR2 } from "~/lib/upload/server";
 import { uploadFileSchema } from "../validations";
