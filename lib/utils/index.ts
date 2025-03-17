@@ -1,10 +1,4 @@
-import {
-  type CoreAssistantMessage,
-  type CoreToolMessage,
-  type Message,
-  type ToolInvocation,
-  generateId,
-} from "ai";
+import type { CoreAssistantMessage, CoreToolMessage, Message, ToolInvocation } from "ai";
 import { type ClassValue, clsx } from "clsx";
 import { customAlphabet } from "nanoid";
 import { twMerge } from "tailwind-merge";
@@ -87,7 +81,7 @@ export function convertToUIMessages(messages: Array<DBMessage>): Array<Message> 
     }
 
     chatMessages.push({
-      id: generateId(),
+      id: generateUUID(),
       role: message.role as Message["role"],
       content: textContent,
       toolInvocations,

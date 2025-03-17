@@ -1,5 +1,3 @@
-"use server";
-
 import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import { wrapLanguageModel } from "ai";
 import { ProxyAgent, setGlobalDispatcher } from "undici";
