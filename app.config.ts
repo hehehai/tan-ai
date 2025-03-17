@@ -14,6 +14,6 @@ export default defineConfig({
 
   server: {
     // https://tanstack.com/start/latest/docs/framework/react/hosting#deployment
-    preset: "node-server",
+    preset: "vercel",
   },
 });
