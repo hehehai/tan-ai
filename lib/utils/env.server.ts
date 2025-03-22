@@ -7,6 +7,7 @@ const envSchema = {
     DATABASE_URL: z.string().url(),
     BETTER_AUTH_SECRET: z.string().min(1),
     GOOGLE_GENERATIVE_AI_API_KEY: z.string().min(1),
+    DEEPSEEK_API_KEY: z.string().min(1),
     CLOUD_FLARE_R2_ACCOUNT_ID: z.string().min(1),
     CLOUD_FLARE_S3_UPLOAD_ID: z.string().min(1),
     CLOUD_FLARE_S3_UPLOAD_SECRET: z.string().min(1),

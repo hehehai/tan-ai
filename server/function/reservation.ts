@@ -1,6 +1,6 @@
 import { generateObject } from "ai";
 import { z } from "zod";
-import { geminiFlashModel } from "~/lib/ai/google";
+import { geminiFlashModel } from "~/lib/ai/model/google";
 
 export async function generateSampleFlightStatus({
 	flightNumber,

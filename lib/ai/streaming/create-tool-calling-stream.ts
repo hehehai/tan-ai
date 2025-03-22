@@ -9,7 +9,7 @@ import { generateUUID, sanitizeResponseMessages } from "~/lib/utils";
 import { getMaxAllowedTokens, truncateMessages } from "~/lib/utils/context-window";
 import { saveMessages } from "~/server/function/chat";
 import { SYSTEM_PROMPT, TOOLS_PROMPT } from "../constants/prompt";
-import { geminiProModel } from "../google";
+import { deepseek } from "../model/deepseek";
 import { retrieveTool } from "../tools/retrieve";
 import { searchTool } from "../tools/search";
 import type { BaseStreamConfig } from "../types";
@@ -27,7 +27,7 @@ export function createToolCallingStreamResponse(
         const truncatedMessages = truncateMessages(coreMessages, getMaxAllowedTokens());
 
         const result = streamText({
-          model: geminiProModel,
+          model: deepseek("ep-20250216204606-mwbhg"),
           system: `${SYSTEM_PROMPT}\n\n${TOOLS_PROMPT}`,
           messages: truncatedMessages,
           maxSteps: 5,
