@@ -205,7 +205,11 @@ export function MultimodalInput({
         className="min-h-[24px] overflow-hidden resize-none rounded-lg text-base bg-muted border-none"
         rows={3}
         onKeyDown={(event) => {
-          if (event.key === "Enter" && !event.shiftKey) {
+          if (
+            event.key === "Enter" &&
+            !event.shiftKey &&
+            !event.nativeEvent.isComposing
+          ) {
             event.preventDefault();
 
             if (isLoading) {

@@ -44,7 +44,8 @@ export const SYSTEM_PROMPT = `
   - Place citations directly after relevant sentences or paragraphs. Do not put them in the answer's footer!
   - It is very important to have citations to the facts or details you are providing in the response.
   - Format: [Source Title](URL).
-  - Ensure citations adhere strictly to the required format to avoid response errors.`;
+  - Ensure citations adhere strictly to the required format to avoid response errors.
+  - Please answer the question in the user's language`;
 
 export const TOOLS_PROMPT = `
   Today's Date: ${new Date().toLocaleDateString("en-US", { year: "numeric", month: "short", day: "2-digit", weekday: "short" })}

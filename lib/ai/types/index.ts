@@ -1,9 +1,4 @@
-import type {
-  ReasoningUIPart,
-  SourceUIPart,
-  TextUIPart,
-  ToolInvocationUIPart,
-} from "@ai-sdk/ui-utils";
+import type { UIMessage } from "@ai-sdk/ui-utils";
 import type { Message } from "ai";
 
 export type SearchImage = {
@@ -54,8 +49,4 @@ export interface BaseStreamConfig {
 }
 
 // Add this type at the top with other interfaces
-export type MessagePart =
-  | TextUIPart
-  | ReasoningUIPart
-  | ToolInvocationUIPart
-  | SourceUIPart;
+export type MessagePart = UIMessage["parts"][number];
